@@ -10,11 +10,12 @@ const blogRoutes = require("./routes/blog");
 const newsletterRoutes = require("./routes/newsletter");
 const contactRoutes = require("./routes/contact");
 
+const app = express();
+
 //middleware
 app.use(helmet());
 app.use(compression());
 app.use(morgan('dev'));
-const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
