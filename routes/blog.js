@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // Make sure Firebase admin is initialized in your project (do this once globally)
-const db = require('../firebaseConfig'); // ✅ safely initialized
+const db = require('../firebase/firebaseConfig'); // ✅ safely initialized
 const blogRef = db.ref('blogs');
 
 // GET all blog posts

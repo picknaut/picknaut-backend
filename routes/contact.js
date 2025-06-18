@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const db = require('../firebaseConfig'); // ✅ safely initialized
+const db = require('../firebase/firebaseConfig'); // ✅ safely initialized
 const contactRef = db.ref('contacts');
 
 // POST contact form data
