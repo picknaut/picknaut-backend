@@ -27,3 +27,24 @@ exports.removeSubscriber = async (email) => {
     }
   });
 };
+
+// Check if email exists in subscribers
+exports.isAlreadySubscribed = async (email) => {
+  const ref = db.ref("newsletter");
+  const snapshot = await ref.once("value");
+
+  let exists = false;
+  snapshot.forEach((child) => {
+    if (child.val().email === email) {
+      exists = true;
+    }
+  });
+
+  return exists;
+};
+
+// Add new email
+exports.subscribeEmail = async (email) => {
+  const ref = db.ref("newsletter");
+  await ref.push({ email, subscribedAt: new Date().toISOString() });
+};
