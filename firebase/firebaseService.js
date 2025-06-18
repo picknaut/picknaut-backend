@@ -30,7 +30,7 @@ exports.removeSubscriber = async (email) => {
 
 // Check if email exists in subscribers
 exports.isAlreadySubscribed = async (email) => {
-  const ref = db.ref("newsletter");
+  const ref = db.ref("subscribers");
   const snapshot = await ref.once("value");
 
   let exists = false;
