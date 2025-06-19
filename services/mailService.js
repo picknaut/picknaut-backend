@@ -60,7 +60,7 @@ exports.sendWelcomeEmail = async (toEmail) => {
       // both mailto: and web-based unsubscribe
       "List-Unsubscribe": [
         `<mailto:unsubscribe@picknaut.com?subject=unsubscribe>`,
-        `<https://backend.picknaut.com/api/newsletter/unsubscribe?email=${encodeURIComponent(toEmail)}>`
+        `<https://api.picknaut.com/api/newsletter/unsubscribe?email=${encodeURIComponent(toEmail)}>`
       ].join(", "),
       // allows “one-click” via web link
       "List-Unsubscribe-Post": "List-Unsubscribe=One-Click"
