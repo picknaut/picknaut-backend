@@ -77,7 +77,7 @@ exports.sendWelcomeEmail = async (toEmail) => {
                         <tbody style="font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif; box-sizing: border-box;">
                         <tr>
                         <td class="email-masthead" style="font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif; box-sizing: border-box; width: 100%; margin: 0; padding: 0; -premailer-width: 100%; -premailer-cellpadding: 0; -premailer-cellspacing: 0; text-align: center;">
-                            <a href="https://picknaut.com/" style="font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif; box-sizing: border-box; color: #9568F7; font-weight: bold;"><img src="https://picknaut.com/images/picknaut-header-light.png" alt="Picknaut" style="width: 100%; max-width: 570px; height: auto; font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif; box-sizing: border-box; border: none;"></a>
+                            <a href="https://www.picknaut.com/" style="font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif; box-sizing: border-box; color: #9568F7; font-weight: bold;"><img src="https://www.picknaut.com/images/picknaut-header-light.png" alt="Picknaut" style="width: 100%; max-width: 570px; height: auto; font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif; box-sizing: border-box; border: none;"></a>
                         </td>
                         </tr>
                         <!-- Email Body -->
