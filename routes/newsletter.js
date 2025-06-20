@@ -1,41 +1,31 @@
 const express = require("express");
 const router = express.Router();
 
-const {
-  isAlreadySubscribed,
-  addSubscriber,
-  removeSubscriber,
-} = require("../firebase/firebaseService");
-
+const firebaseService = require("../firebase/firebaseService");
 const { sendWelcomeEmail } = require("../services/mailService");
 
 router.post("/subscribe", async (req, res) => {
-  const { email } = req.body;
+  const email = req.body.email;
 
-  if (!email || !email.includes("@")) {
-    return res.status(400).json({ success: false, message: "Invalid email." });
+  if (!email) {
+    return res.status(400).json({ message: "Email required" });
   }
 
   try {
-    const alreadySubscribed = await isAlreadySubscribed(email);
+    const already = await firebaseService.isAlreadySubscribed(email);
 
-    if (alreadySubscribed) {
-      return res
-        .status(200)
-        .json({ success: true, message: "You're already subscribed!" });
+    if (already) {
+      return res.status(200).json({ message: "Already subscribed." });
     }
 
-    await addSubscriber(email);
-    await sendWelcomeEmail(email); // this uses subscribe@picknaut.com
+    await sendWelcomeEmail(email);
+    await firebaseService.addSubscriber(email);
+    await firebaseService.incrementListCount();
 
-    return res
-      .status(200)
-      .json({ success: true, message: "Subscription successful. Welcome email sent!" });
+    return res.status(200).json({ message: "Subscription successful!" });
   } catch (err) {
-    console.error("Subscribe Error:", err);
-    return res
-      .status(500)
-      .json({ success: false, message: "Server error. Please try again." });
+    console.error("Error during subscription:", err);
+    return res.status(500).json({ message: "Something went wrong." });
   }
 });
 
@@ -47,7 +37,7 @@ router.post("/unsubscribe", async (req, res) => {
   }
 
   try {
-    await removeSubscriber(email);
+    await firebaseService.removeSubscriber(email);
     return res
       .status(200)
       .json({ success: true, message: "You've been unsubscribed." });
@@ -56,6 +46,19 @@ router.post("/unsubscribe", async (req, res) => {
     return res
       .status(500)
       .json({ success: false, message: "Server error. Try again." });
+  }
+});
+
+// Get subscriber count
+router.get("/count", async (req, res) => {
+  try {
+    const ref = firebaseService.db.ref("List");
+    const snapshot = await ref.once("value");
+    const count = snapshot.val() || 0;
+    res.status(200).json({ count });
+  } catch (error) {
+    console.error("Error fetching subscriber count:", error);
+    res.status(500).json({ error: "Failed to fetch count" });
   }
 });
 
