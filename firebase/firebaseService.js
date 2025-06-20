@@ -1,5 +1,7 @@
 const db = require('./firebaseConfig');
 
+exports.db = db; // ← ADD THIS if it's missing
+
 // Blog Posts
 exports.getAllPosts = async () => {
   const ref = db.ref("posts");
@@ -47,4 +49,11 @@ exports.isAlreadySubscribed = async (email) => {
 exports.subscribeEmail = async (email) => {
   const ref = db.ref("newsletter");
   await ref.push({ email, subscribedAt: new Date().toISOString() });
+};
+
+exports.incrementListCount = async () => {
+  const ref = db.ref("List");
+  const snapshot = await ref.once("value");
+  const current = snapshot.val() || 0;
+  await ref.set(current + 1);
 };
